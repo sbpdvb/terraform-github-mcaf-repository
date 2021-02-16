@@ -35,6 +35,20 @@ resource "github_repository" "default" {
   visibility             = var.visibility
 }
 
+resource "github_repository_file" "terraform_backend" {
+  for_each            = var.terraform_backend == null ? [] : toset(var.terraform_backend.branches)
+
+  file                = "${var.terraform_backend.working_directory}/backend.tf"
+  branch              = each.value
+  overwrite_on_create = true
+  repository          = github_repository.default.name
+
+  content = templatefile("${path.module}/template_files/terraform.tf.tpl", {
+    organization = var.terraform_backend.organization
+    workspace    = var.terraform_backend.workspace
+  })
+}
+
 resource "github_branch" "default" {
   for_each   = local.branches
   branch     = each.value

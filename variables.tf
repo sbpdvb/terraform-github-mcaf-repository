@@ -121,6 +121,17 @@ variable "visibility" {
   description = "Set the Github repository as public, private or internal"
 }
 
+variable "terraform_backend" {
+  type = object({
+    branches          = list(string)
+    organization      = string
+    working_directory = string
+    workspace         = string 
+  })
+  default = null
+  description = "Settings to create a Terraform backend file"
+}
+
 variable "writers" {
   type        = list(string)
   default     = []

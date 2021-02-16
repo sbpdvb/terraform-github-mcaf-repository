@@ -2,6 +2,19 @@
 
 MCAF Terraform module to create and manage a GitHub repository.
 
+## Terraform Cloud Support
+
+In case the repository is going to be used for a Terraform project running on Terraform Cloud, the backend configuration can be created automatically by using the variable `terraform_backend` like in the example below.
+
+```hcl
+terraform_backend = {
+    branches          = ["...", "..."]
+    organization      = "..."
+    working_directory = "..."
+    workspace         = "..." 
+}
+```
+
 <!--- BEGIN_TF_DOCS --->
 ## Requirements
 
